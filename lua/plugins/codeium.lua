@@ -6,6 +6,12 @@ return {
         "hrsh7th/nvim-cmp",
     },
     config = function()
+        -- Detecta o sistema operacional
+        local is_windows = vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1
+
+        -- Define a tecla de accept baseada no SO
+        local accept_key = is_windows and "<Tab>" or "<S-CR>"
+
         require("codeium").setup({
             -- Evita conflito com o nvim-cmp, mantendo apenas as sugestões inline
             enable_cmp_source = false,
@@ -31,7 +37,7 @@ return {
                 
                 -- Configuração dos atalhos
                 key_bindings = {
-                    accept = "<S-CR>",     -- Shift + Enter para aceitar sugestão
+                    accept = accept_key,     -- Tab no Windows, Shift+Enter em outros
                     accept_word = "<M-w>",  -- Alt + W para aceitar uma palavra
                     accept_line = "<M-k>",  -- Alt + K para aceitar linha inteira
                     next = "<M-j>",         -- Alt + J para próxima sugestão
