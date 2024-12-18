@@ -7,6 +7,27 @@ return {
             "stevearc/dressing.nvim",
         },
         config = function()
+            local is_windows = vim.fn.has('win32') == 1
+            local flutter_path
+            local dart_sdk_path
+            local dart_cmd
+
+            if is_windows then
+                flutter_path = "D:\\SDK\\flutter\\bin\\flutter.bat"
+                dart_sdk_path = "D:\\SDK\\flutter\\bin\\cache\\dart-sdk"
+                dart_cmd = { "D:\\SDK\\flutter\\bin\\dart.bat", "language-server", "--protocol=lsp" }
+            else
+                -- For macOS/Linux with ASDF
+                local home = os.getenv("HOME")
+                flutter_path = home .. "/.asdf/shims/flutter"
+                -- Get the real Dart SDK path by following the shim
+                local dart_path = home .. "/.asdf/shims/dart"
+                dart_cmd = { dart_path, "language-server", "--protocol=lsp" }
+                -- For dart_sdk_path, we'll use the ASDF installation path
+                local flutter_version = vim.fn.trim(vim.fn.system("asdf current flutter | awk '{print $1}'"))
+                dart_sdk_path = home .. "/.asdf/installs/flutter/" .. flutter_version .. "/bin/cache/dart-sdk"
+            end
+
             require("flutter-tools").setup({
                 ui = {
                     border = "rounded",
@@ -30,10 +51,10 @@ return {
                         }
                     end,
                 },
-                flutter_path = "D:\\SDK\\flutter\\bin\\flutter.bat",
-                dart_sdk_path = "D:\\SDK\\flutter\\bin\\cache\\dart-sdk",
+                flutter_path = flutter_path,
+                dart_sdk_path = dart_sdk_path,
                 lsp = {
-                    cmd = { "D:\\SDK\\flutter\\bin\\dart.bat", "language-server", "--protocol=lsp" },
+                    cmd = dart_cmd,
                     color = {
                         enabled = true,
                         background = true,

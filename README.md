@@ -53,7 +53,26 @@ Antes de começar, certifique-se de ter o Neovim instalado no seu sistema (recom
    }
    ```
 
-## 🐧 Configuração no Linux/macOS
+## 🍎 Configuração no macOS com ASDF
+
+1. Verificar os caminhos do Flutter e Dart
+   Para encontrar os caminhos corretos do Flutter e Dart quando instalados via ASDF, use os seguintes comandos:
+   ```bash
+   # Encontrar o caminho do executável Flutter
+   which flutter
+   # Deve retornar algo como: /Users/seu-usuario/.asdf/shims/flutter
+
+   # Encontrar o caminho do executável Dart
+   which dart
+   # Deve retornar algo como: /Users/seu-usuario/.asdf/shims/dart
+   ```
+
+2. Configurar o LSP do Flutter
+   - Os caminhos já estão configurados automaticamente para usar os shims do ASDF
+   - O arquivo `lua/plugins/flutter.lua` detecta automaticamente se você está no macOS e usa os caminhos corretos
+   - O Dart SDK path será configurado baseado na versão atual do Flutter no ASDF
+
+## 🐧 Configuração no Linux
 
 Em breve! 🚧
 
