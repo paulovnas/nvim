@@ -12,7 +12,21 @@ Bem-vindo à minha configuração personalizada do Neovim! Esta configuração i
 
 ## 🔧 Pré-requisitos
 
-Antes de começar, certifique-se de ter o Neovim instalado no seu sistema (recomendada a versão 0.8.0 ou superior).
+Antes de começar, certifique-se de ter instalado:
+
+- Neovim (recomendada a versão 0.8.0 ou superior)
+- ripgrep (necessário para busca de texto com Telescope)
+  ```bash
+  # macOS (com Homebrew)
+  brew install ripgrep
+
+  # Windows (com Chocolatey)
+  choco install ripgrep
+
+  # Linux
+  sudo apt install ripgrep  # Ubuntu/Debian
+  sudo dnf install ripgrep  # Fedora
+  ```
 
 ## 🪟 Configuração no Windows
 
@@ -25,6 +39,7 @@ Antes de começar, certifique-se de ter o Neovim instalado no seu sistema (recom
    ```powershell
    choco install mingw
    choco install gzip
+   choco install ripgrep  # Necessário para busca de texto no Telescope
    ```
 
 3. Instalar o Neovim

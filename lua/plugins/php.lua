@@ -1,10 +1,13 @@
 return {
     {
+        -- Parser de sintaxe para PHP
         "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
+        build = ":TSUpdate",  -- Comando para atualizar os parsers
         config = function()
             require("nvim-treesitter.configs").setup({
+                -- Instala os parsers para PHP e PHPDoc
                 ensure_installed = { "php", "phpdoc" },
+                -- Habilita highlight de sintaxe avançado
                 highlight = {
                     enable = true,
                 },
@@ -12,32 +15,60 @@ return {
         end
     },
     {
+        -- Gerador de documentação automática
         "danymat/neogen",
         dependencies = {
-            "nvim-treesitter/nvim-treesitter",
+            "nvim-treesitter/nvim-treesitter",  -- Necessário para análise de código
         },
         config = function()
             require("neogen").setup({
                 enabled = true,
+                -- Configuração específica para cada linguagem
                 languages = {
                     php = {
                         template = {
-                            annotation_convention = "phpdoc",
+                            annotation_convention = "phpdoc",  -- Usa o padrão PHPDoc
                         },
                     },
                 },
+                -- Usa LuaSnip como engine de snippets
                 snippet_engine = "luasnip",
             })
 
-            -- Keymaps para geração de documentação
+            -- Atalhos para geração de documentação
             local opts = { noremap = true, silent = true }
-            -- Função/Método
+            
+            -- Gera documentação para funções/métodos
+            -- Exemplo:
+            -- /**
+            --  * Description
+            --  * @param Type $param Description
+            --  * @return Type Description
+            --  */
             vim.keymap.set("n", "<Leader>pd", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
-            -- Classe
+            
+            -- Gera documentação para classes
+            -- Exemplo:
+            -- /**
+            --  * Class Description
+            --  * @package Package
+            --  */
             vim.keymap.set("n", "<Leader>pc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
-            -- Tipo
+            
+            -- Gera documentação para tipos (interfaces, traits)
+            -- Exemplo:
+            -- /**
+            --  * Interface/Trait Description
+            --  */
             vim.keymap.set("n", "<Leader>pt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
-            -- Arquivo
+            
+            -- Gera documentação para arquivos
+            -- Exemplo:
+            -- /**
+            --  * File Description
+            --  * @package Package
+            --  * @author Author
+            --  */
             vim.keymap.set("n", "<Leader>pf", ":lua require('neogen').generate({ type = 'file' })<CR>", opts)
         end
     }
