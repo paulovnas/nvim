@@ -59,25 +59,28 @@ vim.defer_fn(function()
     -- Atalhos para Telescope (fuzzy finder)
     local ok, telescope = pcall(require, 'telescope.builtin')
     if ok then
-        -- <leader>ff - Busca arquivos
         vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Find files' })
-        -- <leader>fg - Busca texto em todos os arquivos do diretório atual e subdiretórios
         vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Find text in all files' })
-        -- <leader>fr - Busca arquivos recentes
         vim.keymap.set('n', '<leader>fr', telescope.oldfiles, { desc = 'Find recent files' })
+        -- Adiciona busca de TODOs
+        vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find TODOs" })
     end
-end, 100)
 
---[[
-    Atalhos globais:
-    <Space> - Tecla líder
-    <leader>ff - Busca arquivos
-    <leader>fg - Busca texto em todos os arquivos
-    <leader>fr - Arquivos recentes
-    
-    Navegação:
-    hjkl - Movimento básico
-    <C-u>/<C-d> - Meia página acima/abaixo
-    <C-b>/<C-f> - Página inteira acima/abaixo
-    gg/G - Início/fim do arquivo
---]]
+    -- Atalhos para Barbar (gerenciador de abas)
+    vim.keymap.set('n', '<A-,>', '<Cmd>BufferPrevious<CR>', { desc = 'Previous buffer' })
+    vim.keymap.set('n', '<A-.>', '<Cmd>BufferNext<CR>', { desc = 'Next buffer' })
+    vim.keymap.set('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', { desc = 'Go to buffer 1' })
+    vim.keymap.set('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', { desc = 'Go to buffer 2' })
+    vim.keymap.set('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', { desc = 'Go to buffer 3' })
+    vim.keymap.set('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', { desc = 'Go to buffer 4' })
+    vim.keymap.set('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', { desc = 'Go to buffer 5' })
+    -- Atalhos para fechar abas
+    vim.keymap.set('n', '<A-w>', '<Cmd>BufferClose<CR>', { desc = 'Close buffer' })
+    vim.keymap.set('n', '<leader>bw', '<Cmd>BufferClose<CR>', { desc = 'Close current buffer' })
+    vim.keymap.set('n', '<leader>ba', '<Cmd>BufferCloseAllButCurrent<CR>', { desc = 'Close all but current' })
+    vim.keymap.set('n', '<leader>bl', '<Cmd>BufferCloseBuffersLeft<CR>', { desc = 'Close all buffers to the left' })
+    vim.keymap.set('n', '<leader>br', '<Cmd>BufferCloseBuffersRight<CR>', { desc = 'Close all buffers to the right' })
+
+    -- Mini.files (gerenciador de arquivos)
+    vim.keymap.set("n", "<leader>e", function() require("mini.files").open() end, { desc = "Open file explorer" })
+end, 100)
